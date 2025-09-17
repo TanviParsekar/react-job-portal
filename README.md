@@ -1,6 +1,5 @@
 # 📝 React Job Portal
-
-This is the **Django REST Framework (DRF)** backend for the Todo  
+ 
 The application displays active job openings with search and filter functionality, along with job details pages. Built using **ReactJS**, **Vite**, **TypeScript**, and **Material UI (MUI)**.
 
 ---
