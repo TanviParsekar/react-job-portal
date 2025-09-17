@@ -17,7 +17,6 @@ export const useLookups = () => {
           fetchFunctions(),
         ]);
         if (!mounted) return;
-        //actual response shape — here we assume arrays or fields
         setDepartments(dRes.departments ?? dRes);
         setLocations(lRes.locations ?? lRes);
         setFunctions(fRes.functions ?? fRes);

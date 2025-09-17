@@ -18,7 +18,7 @@ export type Department = {
 };
 
 export type Division = { 
-  id: number;  // or id?: number, based on your needs
+  id: number; 
   title: string; 
 };
 

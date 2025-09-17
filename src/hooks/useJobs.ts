@@ -16,10 +16,8 @@ export const useJobs = (filters: Record<string, any>) => {
       try {
         abortRef.current?.abort();
         abortRef.current = new AbortController();
-        // pass filters as params to API
         const data = await fetchJobs(filters);
         if (!mounted) return;
-        // adapt to actual API output shape:
         const items = data.jobs ?? data;
         setJobs(items);
       } catch (err: any) {
@@ -34,7 +32,7 @@ export const useJobs = (filters: Record<string, any>) => {
       mounted = false;
       abortRef.current?.abort();
     };
-  }, [JSON.stringify(filters)]);        // stringify to compare deeply
+  }, [JSON.stringify(filters)]);  
 
   return { jobs, loading, error };
 };

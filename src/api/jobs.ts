@@ -6,11 +6,9 @@ type JobsListParams = {
   department?: number | string;
   location?: number | string;
   function?: number | string;
-    //pagination params if API supports
 };
 
 export const fetchJobs = async (params: JobsListParams = {}) => {
-  // Map frontend param names to API param names
   const res = await api.get<{ jobs: Job[] } & any>("/api/v1/jobs", { params });
   return res.data;
 };
