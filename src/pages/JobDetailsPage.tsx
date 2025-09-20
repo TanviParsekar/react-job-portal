@@ -30,10 +30,16 @@ export const JobDetailsPage: React.FC = () => {
         const j = await fetchJobById(id!);
         if (!mounted) return;
         setJob(j);
+
         if (j?.department?.id) {
-          const res = await fetchJobs({ department: j.department.id });
+          const res = await fetchJobs();
           const items = res.jobs ?? res;
-          setOtherJobs((items as Job[]).filter((x) => x.id !== j.id));
+
+          const filtered = (items as Job[]).filter(
+            (x) => x.id !== j.id && x.department?.id === j.department?.id
+          );
+
+          setOtherJobs(filtered);
         }
       } catch (err) {
         console.error(err);
@@ -63,8 +69,13 @@ export const JobDetailsPage: React.FC = () => {
   return (
     <Box maxWidth="1100px" mx="auto" mt={4}>
       {/*Top Line */}
-      <Typography variant="subtitle2" gutterBottom sx={{color:"black", fontWeight:'bold'}}>
-        {job.department?.title} Department At Teknorix Systems {job.location?.state}
+      <Typography
+        variant="subtitle2"
+        gutterBottom
+        sx={{ color: "black", fontWeight: "bold" }}
+      >
+        {job.department?.title} Department At Teknorix Systems{" "}
+        {job.location?.state}
       </Typography>
 
       {/* Title */}
@@ -72,12 +83,18 @@ export const JobDetailsPage: React.FC = () => {
         {job.title}
       </Typography>
 
-      <Box display="flex" alignItems="center" gap={2} mb={2} sx={{ color:"rgba(29, 27, 27, 0.75)"}}>
-        <Box display="flex" alignItems="center" gap={1} >
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={2}
+        mb={2}
+        sx={{ color: "rgba(29, 27, 27, 0.75)" }}
+      >
+        <Box display="flex" alignItems="center" gap={1}>
           <BusinessIcon fontSize="small" />
           <Typography>{job.department?.title}</Typography>
         </Box>
-        <Box display="flex" alignItems="center" gap={1} >
+        <Box display="flex" alignItems="center" gap={1}>
           <LocationOnIcon fontSize="small" />
           <Typography>
             {job.location?.city}, {job.location?.state}
@@ -92,7 +109,6 @@ export const JobDetailsPage: React.FC = () => {
             fontSize="10px"
             fontWeight="bold"
             fontFamily={"sans-serif"}
-                          
             color="rgba(29, 27, 27, 0.75)"
           >
             {job.type.toUpperCase()}
@@ -109,14 +125,23 @@ export const JobDetailsPage: React.FC = () => {
           href={job.applyUrl}
           target="_blank"
           rel="noreferrer"
-          sx={{ mb: 2, mt:2 ,width:'150px',height:'35px', fontWeight:"bold", borderRadius: "20px", textTransform: "none", fontSize: "0.75rem" }}
+          sx={{
+            mb: 2,
+            mt: 2,
+            width: "150px",
+            height: "35px",
+            fontWeight: "bold",
+            borderRadius: "20px",
+            textTransform: "none",
+            fontSize: "0.75rem",
+          }}
         >
           Apply
         </Button>
       )}
 
       <Divider sx={{ my: 2 }} />
-    
+
       <Box
         display="flex"
         flexDirection={{ xs: "column", md: "row" }}
@@ -132,10 +157,13 @@ export const JobDetailsPage: React.FC = () => {
         </Box>
 
         {/* Right */}
-        <Box flex={1} minWidth={{ xs: "100%", md: "300px" }} >
+        <Box flex={1} minWidth={{ xs: "100%", md: "300px" }}>
           {/* Other Job Openings */}
           {otherJobs.length > 0 && (
-            <Paper variant="outlined" sx={{ p: 2, mb: 3,backgroundColor:'#1976d213 '}} >
+            <Paper
+              variant="outlined"
+              sx={{ p: 2, mb: 3, backgroundColor: "#1976d213 " }}
+            >
               <Typography
                 variant="subtitle1"
                 fontWeight="bold"
@@ -156,8 +184,14 @@ export const JobDetailsPage: React.FC = () => {
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
                     <Typography fontWeight="bold">{j.title}</Typography>
-                    <Box display="flex" alignItems="center" gap={2} mt={0.5} sx={{ color:"rgba(29, 27, 27, 0.75)"}}>
-                      <Box display="flex" alignItems="center" gap={0.5} >
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      gap={2}
+                      mt={0.5}
+                      sx={{ color: "rgba(29, 27, 27, 0.75)" }}
+                    >
+                      <Box display="flex" alignItems="center" gap={0.5}>
                         <BusinessIcon fontSize="small" />
                         <Typography variant="body2" color="text.secondary">
                           {j.department?.title}
